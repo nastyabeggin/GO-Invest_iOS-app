@@ -59,7 +59,6 @@ class StrategyView: UIView {var actionForCompute: ((_ amount: Double, _ risk: In
 
     private func setupLayout() {
         NSLayoutConstraint.activate([
-            self.heightAnchor.constraint(equalToConstant: 663),
             risksView.topAnchor.constraint(equalTo: topAnchor, constant: 30),
             risksView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: Constants.margin),
             risksView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -Constants.margin),
