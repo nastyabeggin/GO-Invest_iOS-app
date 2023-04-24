@@ -141,6 +141,7 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
         tableView.reloadData()
         if AppState.isAuth {
             welcomeView.isHidden = true
+            print("hide")
         } else {
             welcomeView.isHidden = false
             Storage.freeIds()

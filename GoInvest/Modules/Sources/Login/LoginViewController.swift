@@ -56,9 +56,11 @@ public class LoginViewController: UIViewController {
 
     let animateButton = {
         let button = UIButton()
-        button.backgroundColor = .black
+        button.backgroundColor = Theme.Colors.button
         button.setTitle("Login", for: .normal)
-        button.layer.cornerRadius = 10
+        button.titleLabel?.font = Theme.Fonts.button
+        button.setTitleColor(Theme.Colors.buttonHighlightedText, for: .highlighted)
+        button.layer.cornerRadius = Theme.StyleElements.buttonCornerRadius
         return button
     }()
 
@@ -78,22 +80,6 @@ public class LoginViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
 
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(sender:)), name: UIResponder.keyboardWillHideNotification, object: nil)
-    }
-
-    @objc func keyboardWillShow(notification: NSNotification) {
-        guard !isKeyBoardUp else {return}
-        if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as?
-            NSValue {
-            let keyboardHeight = keyboardFrame.cgRectValue.height
-            let bottomSpace = self.view.frame.height - (animateButton.frame.origin.y + animateButton.frame.height)
-            view.frame.origin.y -= keyboardHeight - bottomSpace + 10
-        }
-        isKeyBoardUp = true
-    }
-
-    @objc func keyboardWillHide(sender: NSNotification) {
-        self.view.frame.origin.y = 0 // Move view to original position
-        isKeyBoardUp = false
     }
 
     func setSingUpLabel() {
@@ -136,7 +122,8 @@ public class LoginViewController: UIViewController {
         animateButton.translatesAutoresizingMaskIntoConstraints = false
         animateButton.topAnchor.constraint(equalTo: glassView.bottomAnchor, constant: 20).isActive = true
         animateButton.rightAnchor.constraint(equalTo: glassView.rightAnchor).isActive = true
-        animateButton.widthAnchor.constraint(equalToConstant: 120).isActive = true
+        animateButton.leftAnchor.constraint(equalTo: glassView.leftAnchor).isActive = true
+        animateButton.heightAnchor.constraint(equalToConstant: Theme.Layout.buttonHeight).isActive = true
         animateButton.addTarget(self, action: #selector(action), for: .touchUpInside)
     }
 
@@ -167,6 +154,25 @@ public class LoginViewController: UIViewController {
         glassView.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -50).isActive = true
         glassView.widthAnchor.constraint(equalToConstant: 300).isActive = true
         glassView.heightAnchor.constraint(equalToConstant: 280).isActive = true
+    }
+}
+
+extension LoginViewController {
+
+    @objc func keyboardWillShow(notification: NSNotification) {
+        guard !isKeyBoardUp else {return}
+        if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as?
+            NSValue {
+            let keyboardHeight = keyboardFrame.cgRectValue.height
+            let bottomSpace = self.view.frame.height - (animateButton.frame.origin.y + animateButton.frame.height)
+            view.frame.origin.y -= keyboardHeight - bottomSpace + 10
+        }
+        isKeyBoardUp = true
+    }
+
+    @objc func keyboardWillHide(sender: NSNotification) {
+        self.view.frame.origin.y = 0 // Move view to original position
+        isKeyBoardUp = false
     }
 }
 

@@ -87,6 +87,7 @@ public class QuotesViewController: UIViewController {
     }
 
     private func animateTableView() {
+        guard tableView.window != nil else { return }
         tableView.reloadData()
 
         let cells = tableView.visibleCells

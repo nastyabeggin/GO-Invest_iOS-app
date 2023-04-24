@@ -18,6 +18,9 @@ class QuoteCoordinator {
         viewController.onViewDidDisappear = { [weak self] in
             self?.removeFromMemory?()
         }
+        viewController.showWelcomeView = {[weak self] in
+            print("UNAUTH")
+        }
         viewController.navigationItem.title = selectedQuote.name
         navigationController.pushViewController(viewController, animated: true)
     }

@@ -60,6 +60,7 @@ class QuoteDetailView: UIView {
         button.skeletonCornerRadius = Theme.StyleElements.skeletonCornerRadius
         button.addTarget(self, action: #selector(addToFavoritesTapped(_:)), for: .touchUpInside)
         button.setTitle("Added to Favorites", for: .disabled)
+        button.setTitle("Add to Favorites", for: .selected)
         return button
     }()
 
@@ -233,19 +234,24 @@ extension QuoteDetailView {
 
 extension QuoteDetailView {
     @objc private func addToFavoritesTapped(_ sender: UIButton) {
-        guard AppState.isAuth else { return }
-        // addToFavsButton.layer.opacity = 1
         addToFavsHandler?()
-        disableButton()
+        AppState.isAuth ? disableButton() : disableButtonIfUnauth()
     }
 }
 
 extension QuoteDetailView {
     func disableButton() {
+        addToFavsButton.isSelected = false
         addToFavsButton.isEnabled = false
     }
 
+    func disableButtonIfUnauth() {
+        addToFavsButton.isSelected = true
+        addToFavsButton.isEnabled = true
+    }
+
     func enableButton() {
+        addToFavsButton.isSelected = false
         addToFavsButton.isEnabled = true
     }
 }

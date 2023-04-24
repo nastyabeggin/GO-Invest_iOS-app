@@ -13,8 +13,8 @@
 		4D26228A29E5DF2800B56C18 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D26228929E5DF2800B56C18 /* AppCoordinator.swift */; };
 		4D26228C29E5E0C300B56C18 /* TabBarCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D26228B29E5E0C300B56C18 /* TabBarCoordinator.swift */; };
 		4D26229529E5EA3800B56C18 /* QuoteCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D26229429E5EA3800B56C18 /* QuoteCoordinator.swift */; };
-		4D4465A729EB2D3F00CB846C /* SkeletonView in Frameworks */ = {isa = PBXBuildFile; productRef = 4D4465A629EB2D3F00CB846C /* SkeletonView */; };
 		4D54005229F15D6100D87508 /* StrategyResultsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D54005129F15D6100D87508 /* StrategyResultsCoordinator.swift */; };
+		4D5A2D8929F7101F00CE7B6E /* SkeletonView in Frameworks */ = {isa = PBXBuildFile; productRef = 4D5A2D8829F7101F00CE7B6E /* SkeletonView */; };
 		874BEA4D29E72EE5001383BD /* Modules in Frameworks */ = {isa = PBXBuildFile; productRef = 874BEA4C29E72EE5001383BD /* Modules */; };
 		8790EA7B29E5938800A9FD42 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8790EA7A29E5938800A9FD42 /* AppDelegate.swift */; };
 		8790EA7D29E5938800A9FD42 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8790EA7C29E5938800A9FD42 /* SceneDelegate.swift */; };
@@ -41,7 +41,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4D4465A729EB2D3F00CB846C /* SkeletonView in Frameworks */,
+				4D5A2D8929F7101F00CE7B6E /* SkeletonView in Frameworks */,
 				4D0E103729EED9860061EFE4 /* FirebaseFirestore in Frameworks */,
 				4D0E103529EED9860061EFE4 /* FirebaseAuth in Frameworks */,
 				874BEA4D29E72EE5001383BD /* Modules in Frameworks */,
@@ -119,9 +119,9 @@
 			name = GoInvest;
 			packageProductDependencies = (
 				874BEA4C29E72EE5001383BD /* Modules */,
-				4D4465A629EB2D3F00CB846C /* SkeletonView */,
 				4D0E103429EED9860061EFE4 /* FirebaseAuth */,
 				4D0E103629EED9860061EFE4 /* FirebaseFirestore */,
+				4D5A2D8829F7101F00CE7B6E /* SkeletonView */,
 			);
 			productName = GoInvest;
 			productReference = 8790EA7729E5938800A9FD42 /* GoInvest.app */;
@@ -152,8 +152,8 @@
 			);
 			mainGroup = 8790EA6E29E5938800A9FD42;
 			packageReferences = (
-				4D4465A529EB2D3F00CB846C /* XCRemoteSwiftPackageReference "SkeletonView" */,
 				4D0E103329EED9860061EFE4 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				4D5A2D8729F7101F00CE7B6E /* XCRemoteSwiftPackageReference "SkeletonView" */,
 			);
 			productRefGroup = 8790EA7829E5938800A9FD42 /* Products */;
 			projectDirPath = "";
@@ -427,7 +427,7 @@
 				minimumVersion = 10.0.0;
 			};
 		};
-		4D4465A529EB2D3F00CB846C /* XCRemoteSwiftPackageReference "SkeletonView" */ = {
+		4D5A2D8729F7101F00CE7B6E /* XCRemoteSwiftPackageReference "SkeletonView" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Juanpe/SkeletonView.git";
 			requirement = {
@@ -448,9 +448,9 @@
 			package = 4D0E103329EED9860061EFE4 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseFirestore;
 		};
-		4D4465A629EB2D3F00CB846C /* SkeletonView */ = {
+		4D5A2D8829F7101F00CE7B6E /* SkeletonView */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 4D4465A529EB2D3F00CB846C /* XCRemoteSwiftPackageReference "SkeletonView" */;
+			package = 4D5A2D8729F7101F00CE7B6E /* XCRemoteSwiftPackageReference "SkeletonView" */;
 			productName = SkeletonView;
 		};
 		874BEA4C29E72EE5001383BD /* Modules */ = {

@@ -6,6 +6,7 @@ import DomainModels
 import SkeletonView
 import Profile
 import Combine
+import AppState
 
 enum DetailState {
     case loading
@@ -25,6 +26,7 @@ public class QuoteDetailViewController: UIViewController {
     private var detailsData: QuoteDetail?
     private let quote: Quote
     public var onViewDidDisappear: (() -> Void)?
+    public var showWelcomeView: (() -> Void)?
     private let quoteDetailModel: QuoteDetailModel
     private var observations = Set<AnyCancellable>()
 
@@ -40,8 +42,12 @@ public class QuoteDetailViewController: UIViewController {
     private lazy var quoteDetailView: QuoteDetailView = {
         let view = QuoteDetailView()
         view.addToFavsHandler = { [weak self] in
-            if let quoteToAdd = self?.quote {
-                Storage.putQuoteToStorage(quoteToAdd)
+            if AppState.isAuth {
+                if let quoteToAdd = self?.quote {
+                    Storage.putQuoteToStorage(quoteToAdd)
+                }
+            } else {
+                self?.showWelcomeView!()
             }
         }
         view.isSkeletonable = true
@@ -99,7 +105,6 @@ public class QuoteDetailViewController: UIViewController {
             case .success:
                 view.hideSkeleton()
                 errorView.isHidden = true
-                #warning("Paste graphView.graphData = graphData")
                 quoteDetailView.setDetailsData(quoteDetailData: detailsData)
             case .error:
                 errorView.isHidden = false
@@ -194,7 +199,7 @@ private extension QuoteDetailViewController {
 
     func getDataForDetails() {
         detailState = .loading
-        quoteDetailClient?.quoteDetail(id: quote.id ?? "", boardId: "tqbr") { [weak self] result in
+        quoteDetailClient?.quoteDetail(id: quote.id, boardId: "tqbr") { [weak self] result in
             switch result {
             case .success(let quoteDetail):
                 self?.detailsData = quoteDetail
@@ -220,6 +225,8 @@ extension QuoteDetailViewController {
     func updateButton() {
         if Storage.isInFavs(quote) {
             quoteDetailView.disableButton()
+        } else if !AppState.isAuth {
+            quoteDetailView.disableButtonIfUnauth()
         } else {
             quoteDetailView.enableButton()
         }
