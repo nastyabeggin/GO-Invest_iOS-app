@@ -32,7 +32,6 @@ public class StrategyCounter {
     private var riskLevel: RiskLevel
     private var strategy: Strategy
     private let quoteClient: QuotesStatProvider = QuoteClient()
-    #warning("TODO: add real tickers")
     private let tickers: [String]
     private let boards: [String]
     private let quotes: [Quote]
