@@ -5,6 +5,8 @@ public enum Theme {
     public enum Fonts {
         public static let button = UIFont.systemFont(ofSize: 19, weight: .semibold)
         public static let title = UIFont.systemFont(ofSize: 19, weight: .bold)
+        public static let largeTitle = UIFont.systemFont(ofSize: 39, weight: UIFont.Weight(850))
+        public static let extraLargeTitle = UIFont.systemFont(ofSize: 80, weight: UIFont.Weight(850))
         public static let subtitle = UIFont.systemFont(ofSize: 17, weight: .light)
         public static let error = UIFont.systemFont(ofSize: 20, weight: .medium)
     }
@@ -12,6 +14,8 @@ public enum Theme {
     public enum Colors {
         public static let background = UIColor(named: "BackgroundColor")!
         public static let yellow = UIColor(named: "YellowColor")!
+        public static let blueAccent = UIColor(named: "BlueColor")
+        public static let gray = UIColor(named: "GrayColor")
         public static let button = UIColor(named: "BlackColor")!
         public static let mainText = UIColor(named: "BlackColor")!
         public static let buttonText = UIColor(named: "WhiteColor")!

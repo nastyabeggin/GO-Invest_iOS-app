@@ -4,14 +4,18 @@ import UIKit
 
 public class RegistrationViewController: UIViewController {
     public var regButtonHandler: ((String, String) -> Void)?
+    public var loginButtonHandler: (() -> Void)?
     var isKeyBoardUp = false
 
     let signUpLabel = {
         let label = UILabel()
-        label.textAlignment = .center
-        label.textColor = .white
-        label.text = "Sign up"
-        label.font = UIFont(name: "HelveticaNeue-Bold", size: 100)
+        label.textAlignment = .left
+        label.textColor = Theme.Colors.blueAccent
+        label.layer.opacity = 0.6
+        label.text = "Create\nAccount"
+        label.font = Theme.Fonts.extraLargeTitle
+        label.numberOfLines = 2
+        label.adjustsFontSizeToFitWidth = true
         return label
     }()
 
@@ -26,7 +30,6 @@ public class RegistrationViewController: UIViewController {
     let loginTextField = {
         let textField = UITextField()
         textField.autocapitalizationType = .none
-        // textField.text = "Admin@yandex.ru"
         textField.borderStyle = UITextField.BorderStyle.roundedRect
         textField.attributedPlaceholder = NSAttributedString(string: "Email", attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
         textField.backgroundColor = .lightText
@@ -35,7 +38,6 @@ public class RegistrationViewController: UIViewController {
 
     let passwordTextField = {
         let textField = UITextField()
-        // textField.text = "123456"
         textField.borderStyle = UITextField.BorderStyle.roundedRect
         textField.attributedPlaceholder = NSAttributedString(string: "Password", attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
         textField.backgroundColor = .lightText
@@ -47,24 +49,38 @@ public class RegistrationViewController: UIViewController {
         let view = UIView()
         view.frame = CGRect(x: 0, y: 0, width: 300, height: 280)
         view.layer.cornerRadius = 30
-        view.backgroundColor = UIColor.white.withAlphaComponent(0.1)
+        view.backgroundColor = UIColor.white.withAlphaComponent(0.0001)
         view.clipsToBounds = true
-        view.layer.borderWidth = 3
+        view.layer.borderWidth = 2
         view.layer.borderColor = CGColor(red: 238 / 255, green: 238 / 255, blue: 238 / 255, alpha: 0.65)
         return view
     }()
 
     let animateButton = {
         let button = UIButton()
-        button.backgroundColor = .black
+        button.backgroundColor = Theme.Colors.button
+        button.titleLabel?.font = Theme.Fonts.button
+        button.setTitleColor(Theme.Colors.buttonHighlightedText, for: .highlighted)
         button.setTitle("Register", for: .normal)
-        button.layer.cornerRadius = 10
+        button.layer.cornerRadius = Theme.StyleElements.buttonCornerRadius
+        return button
+    }()
+
+    private lazy var loginButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("I already have an account", for: .normal)
+        button.backgroundColor = .clear
+        button.titleLabel?.font = Theme.Fonts.button
+        button.setTitleColor(Theme.Colors.mainText, for: .normal)
+        button.setTitleColor(Theme.Colors.buttonHighlightedText, for: .highlighted)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(presentLogin(_ :)), for: .touchUpInside)
         return button
     }()
 
     override public func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = Theme.Colors.yellow
+        view.backgroundColor = Theme.Colors.gray
         let tapGesture = UITapGestureRecognizer(target: view, action: #selector(UIView.endEditing))
         view.addGestureRecognizer(tapGesture)
         loginTextField.delegate = self
@@ -75,6 +91,7 @@ public class RegistrationViewController: UIViewController {
         setLoginTextField()
         setPasswordTextField()
         setSingUpLabel()
+        setGoToLoginButtonSettings()
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
 
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(sender:)), name: UIResponder.keyboardWillHideNotification, object: nil)
@@ -101,9 +118,11 @@ public class RegistrationViewController: UIViewController {
         view.sendSubviewToBack(signUpLabel)
         signUpLabel.translatesAutoresizingMaskIntoConstraints = false
         signUpLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        signUpLabel.topAnchor.constraint(equalTo: glassView.topAnchor, constant: -80).isActive = true
-        signUpLabel.widthAnchor.constraint(equalToConstant: view.frame.width).isActive = true
-        signUpLabel.heightAnchor.constraint(equalToConstant: 120).isActive = true
+        NSLayoutConstraint.activate([
+            signUpLabel.topAnchor.constraint(equalTo: glassView.topAnchor, constant: -160),
+            signUpLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -Theme.Layout.sideOffset),
+            signUpLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Theme.Layout.sideOffset),
+        ])
     }
 
     func setImageViewUser() {
@@ -135,9 +154,19 @@ public class RegistrationViewController: UIViewController {
         view.addSubview(animateButton)
         animateButton.translatesAutoresizingMaskIntoConstraints = false
         animateButton.topAnchor.constraint(equalTo: glassView.bottomAnchor, constant: 20).isActive = true
-        animateButton.rightAnchor.constraint(equalTo: glassView.rightAnchor).isActive = true
-        animateButton.widthAnchor.constraint(equalToConstant: 120).isActive = true
+        animateButton.trailingAnchor.constraint(equalTo: glassView.trailingAnchor).isActive = true
+        animateButton.leadingAnchor.constraint(equalTo: glassView.leadingAnchor).isActive = true
+        animateButton.heightAnchor.constraint(equalToConstant: Theme.Layout.buttonHeight).isActive = true
         animateButton.addTarget(self, action: #selector(action), for: .touchUpInside)
+    }
+
+    func setGoToLoginButtonSettings() {
+        view.addSubview(loginButton)
+        loginButton.translatesAutoresizingMaskIntoConstraints = false
+        loginButton.topAnchor.constraint(equalTo: animateButton.bottomAnchor, constant: Theme.Layout.smallSpacing).isActive = true
+        loginButton.heightAnchor.constraint(equalToConstant: Theme.Layout.buttonHeight).isActive = true
+        loginButton.trailingAnchor.constraint(equalTo: glassView.trailingAnchor).isActive = true
+        loginButton.leadingAnchor.constraint(equalTo: glassView.leadingAnchor).isActive = true
     }
 
     @objc func action() {
@@ -175,4 +204,11 @@ extension RegistrationViewController: UITextFieldDelegate {
         isKeyBoardUp = false
         return true
     } // called when 'return' key pressed. return NO to ignore.
+}
+
+extension RegistrationViewController {
+    @objc
+    private func presentLogin(_ sender: UIButton) {
+        loginButtonHandler?()
+    }
 }

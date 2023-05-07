@@ -75,7 +75,7 @@ public class ProfileViewController: UIViewController {
     }
 
     private func configureTitle() {
-        title = "Favorites"
+        navigationController?.navigationBar.isHidden = true
     }
 
     private func configureWelcomeView() {
@@ -141,9 +141,11 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
         tableView.reloadData()
         if AppState.isAuth {
             welcomeView.isHidden = true
-            print("hide")
+            navigationController?.navigationBar.isHidden = false
+            title = "Favorites"
         } else {
             welcomeView.isHidden = false
+            navigationController?.navigationBar.isHidden = true
             Storage.freeIds()
             tableView.reloadData()
         }

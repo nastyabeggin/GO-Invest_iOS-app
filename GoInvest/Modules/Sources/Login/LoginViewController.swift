@@ -4,14 +4,18 @@ import UIKit
 
 public class LoginViewController: UIViewController {
     public var loginButtonHandler: ((String, String) -> Void)?
+    public var regButtonHandler: (() -> Void)?
     var isKeyBoardUp = false
 
     let signUpLabel = {
         let label = UILabel()
-        label.textAlignment = .center
-        label.textColor = .white
-        label.text = "Sign in"
-        label.font = UIFont(name: "HelveticaNeue-Bold", size: 100)
+        label.textAlignment = .left
+        label.textColor = Theme.Colors.blueAccent
+        label.layer.opacity = 0.6
+        label.text = "Welcome\nBack"
+        label.adjustsFontSizeToFitWidth = true
+        label.font = Theme.Fonts.extraLargeTitle
+        label.numberOfLines = 2
         return label
     }()
 
@@ -47,9 +51,9 @@ public class LoginViewController: UIViewController {
         let view = UIView()
         view.frame = CGRect(x: 0, y: 0, width: 300, height: 280)
         view.layer.cornerRadius = 30
-        view.backgroundColor = UIColor.white.withAlphaComponent(0.1)
+        view.backgroundColor = UIColor.white.withAlphaComponent(0.0001)
         view.clipsToBounds = true
-        view.layer.borderWidth = 3
+        view.layer.borderWidth = 2
         view.layer.borderColor = CGColor(red: 238 / 255, green: 238 / 255, blue: 238 / 255, alpha: 0.65)
         return view
     }()
@@ -64,9 +68,21 @@ public class LoginViewController: UIViewController {
         return button
     }()
 
+    private lazy var regButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("I don't have an account", for: .normal)
+        button.backgroundColor = .clear
+        button.titleLabel?.font = Theme.Fonts.button
+        button.setTitleColor(Theme.Colors.mainText, for: .normal)
+        button.setTitleColor(Theme.Colors.buttonHighlightedText, for: .highlighted)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(presentRegister(_ :)), for: .touchUpInside)
+        return button
+    }()
+
     override public func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = Theme.Colors.yellow
+        view.backgroundColor = Theme.Colors.gray
         let tapGesture = UITapGestureRecognizer(target: view, action: #selector(UIView.endEditing))
         view.addGestureRecognizer(tapGesture)
         loginTextField.delegate = self
@@ -77,6 +93,7 @@ public class LoginViewController: UIViewController {
         setLoginTextField()
         setPasswordTextField()
         setSingUpLabel()
+        setGoToRegisterButtonSettings()
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
 
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(sender:)), name: UIResponder.keyboardWillHideNotification, object: nil)
@@ -87,9 +104,11 @@ public class LoginViewController: UIViewController {
         view.sendSubviewToBack(signUpLabel)
         signUpLabel.translatesAutoresizingMaskIntoConstraints = false
         signUpLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        signUpLabel.topAnchor.constraint(equalTo: glassView.topAnchor, constant: -80).isActive = true
-        signUpLabel.widthAnchor.constraint(equalToConstant: view.frame.width).isActive = true
-        signUpLabel.heightAnchor.constraint(equalToConstant: 120).isActive = true
+        NSLayoutConstraint.activate([
+            signUpLabel.topAnchor.constraint(equalTo: glassView.topAnchor, constant: -160),
+            signUpLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -Theme.Layout.sideOffset),
+            signUpLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Theme.Layout.sideOffset),
+        ])
     }
 
     func setImageViewUser() {
@@ -145,7 +164,6 @@ public class LoginViewController: UIViewController {
 
     func setGlassViewSettings() {
         glassView.applyBlurEffect()
-       // imageView.addSubview(glassView)
         view.addSubview(glassView)
         glassView.clipsToBounds = true
 
@@ -154,6 +172,15 @@ public class LoginViewController: UIViewController {
         glassView.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -50).isActive = true
         glassView.widthAnchor.constraint(equalToConstant: 300).isActive = true
         glassView.heightAnchor.constraint(equalToConstant: 280).isActive = true
+    }
+
+    func setGoToRegisterButtonSettings() {
+        view.addSubview(regButton)
+        regButton.translatesAutoresizingMaskIntoConstraints = false
+        regButton.topAnchor.constraint(equalTo: animateButton.bottomAnchor, constant: Theme.Layout.smallSpacing).isActive = true
+        regButton.heightAnchor.constraint(equalToConstant: Theme.Layout.buttonHeight).isActive = true
+        regButton.trailingAnchor.constraint(equalTo: glassView.trailingAnchor).isActive = true
+        regButton.leadingAnchor.constraint(equalTo: glassView.leadingAnchor).isActive = true
     }
 }
 
@@ -201,4 +228,11 @@ extension LoginViewController: UITextFieldDelegate {
         isKeyBoardUp = false
         return true
     } // called when 'return' key pressed. return NO to ignore.
+}
+
+extension LoginViewController {
+    @objc
+    private func presentRegister(_ sender: UIButton) {
+        regButtonHandler?()
+    }
 }

@@ -100,7 +100,7 @@ final class SuggestedQuoteCustomCell: UITableViewCell {
     func setData(model: Quote, amount: Double) {
         shortNameLabel.text = model.id
         fullNameLabel.text = model.name
-        priceLabel.text = String(NSString(format: "%.2f", amount)) + "%"
+        priceLabel.text = String(NSString(format: "%.2f", amount * 100)) + "%"
     }
 }
 

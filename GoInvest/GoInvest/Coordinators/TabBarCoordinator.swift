@@ -14,6 +14,8 @@ class TabBarCoordinator {
     var tabBarController: UITabBarController
     var childCoordinators = [QuoteCoordinator]()
     let profileVC = ProfileViewController(client: QuoteClient())
+    let regVC = RegistrationViewController()
+    let loginVC = LoginViewController()
 
     required init(_ tabBarController: UITabBarController) {
         self.tabBarController = tabBarController
@@ -23,8 +25,6 @@ class TabBarCoordinator {
         let modelQuoteList = ListQuoteModel(client: QuoteClient())
         let strategyVC = StrategyViewController(modelQuoteList: modelQuoteList)
         let quotesVC = QuotesViewController(modelQuoteList: modelQuoteList)
-        let loginVC = LoginViewController()
-        let regVC = RegistrationViewController()
         let strategyResultsVC = StrategyResultsViewController()
 
         let quotesNC = UINavigationController(rootViewController: quotesVC)
@@ -40,42 +40,48 @@ class TabBarCoordinator {
             turnOnLogOutButton()
         }
 
-        profileVC.toLogin = {
-            loginVC.modalPresentationStyle = .popover
-            loginVC.loginButtonHandler = { [weak self] email, password in
+        profileVC.toLogin = { [weak self] in
+            self?.loginVC.modalPresentationStyle = .popover
+            self?.loginVC.regButtonHandler = {
+                self?.regVC.modalPresentationStyle = .popover
+                self?.loginVC.dismiss(animated: true, completion: { () -> Void in self?.profileVC.present(self!.regVC, animated: true, completion: nil) })
+            }
+            self?.loginVC.loginButtonHandler = { [weak self] email, password in
                 Auth.auth().signIn(withEmail: email, password: password) { [weak self] authResult, error in
                     guard let strongSelf = self else { return }
                     if authResult != nil {
-                        loginVC.dismiss(animated: true)
+                        self?.loginVC.dismiss(animated: true)
                         AppState.isAuth = true
                         self?.profileVC.refreshVC(with: email)
                         self?.turnOnLogOutButton()
                     } else {
-                        loginVC.wrongDataAnimate()
+                        self?.loginVC.wrongDataAnimate()
                     }
-                    print(error)
                 }
             }
-            self.profileVC.present(loginVC, animated: true, completion: nil)
+            self?.profileVC.present(self!.loginVC, animated: true, completion: nil)
         }
 
-        profileVC.toReg = {
-            regVC.modalPresentationStyle = .popover
-            regVC.regButtonHandler = { [weak self] email, password in
+        profileVC.toReg = { [weak self] in
+            self?.regVC.modalPresentationStyle = .popover
+            self?.regVC.loginButtonHandler = {
+                self?.loginVC.modalPresentationStyle = .popover
+                self?.regVC.dismiss(animated: true, completion: { () -> Void in self?.profileVC.present(self!.loginVC, animated: true, completion: nil) })
+            }
+            self!.regVC.regButtonHandler = { [weak self] email, password in
                 Auth.auth().createUser(withEmail: email, password: password) { [weak self] authResult, error in
                     guard let strongSelf = self else { return }
                     if authResult != nil {
-                        regVC.dismiss(animated: true)
+                        self?.regVC.dismiss(animated: true)
                         AppState.isAuth = true
                         self?.turnOnLogOutButton()
                         self?.profileVC.refreshVC(with: email)
                     } else {
-                        regVC.wrongDataAnimate()
+                        self?.regVC.wrongDataAnimate()
                     }
-                    print(error)
                 }
             }
-            self.profileVC.present(regVC, animated: true, completion: nil)
+            self!.profileVC.present(self!.regVC, animated: true, completion: nil)
         }
 
         quotesVC.didTapButton = { [weak self] quote in
@@ -97,7 +103,7 @@ class TabBarCoordinator {
 
         quotesNC.tabBarItem = UITabBarItem(title: "Quotes", image: Theme.Images.quotesTabBar, tag: 0)
         strategyNC.tabBarItem = UITabBarItem(title: "Strategy", image: Theme.Images.strategyTabBar, tag: 1)
-        profileNC.tabBarItem = UITabBarItem(title: "Favorites", image: Theme.Images.profileTabBarUnchecked, tag: 2)
+        profileNC.tabBarItem = UITabBarItem(title: "Profile", image: Theme.Images.profileTabBarUnchecked, tag: 2)
         profileNC.tabBarItem.selectedImage = Theme.Images.profileTabBarChecked
 
         let controllers = [quotesNC, strategyNC, profileNC]
@@ -114,10 +120,12 @@ class TabBarCoordinator {
     }
 
     private func showQuoteController(with quote: Quote, navigationController: UINavigationController) {
-        let quoteCoordinator = QuoteCoordinator(navigationController: navigationController, quote: quote)
+        let quoteCoordinator = QuoteCoordinator(navigationController: navigationController, quote: quote, registerVC: regVC)
         childCoordinators.append(quoteCoordinator)
         quoteCoordinator.removeFromMemory = { [weak self] in
-            self?.childCoordinators.removeLast()
+            if (self?.childCoordinators.isEmpty) == false {
+                self?.childCoordinators.removeLast()
+            }
         }
         quoteCoordinator.start()
     }
@@ -130,7 +138,7 @@ class TabBarCoordinator {
     }
 
     private func showStrategyResults(navigationController: UINavigationController, quote: Quote) {
-        let strategyResults = StrategyResultsCoordinator(navigationController: navigationController, quote: quote)
+        let strategyResults = StrategyResultsCoordinator(navigationController: navigationController, quote: quote, regVC: regVC)
         strategyResults.start()
     }
 

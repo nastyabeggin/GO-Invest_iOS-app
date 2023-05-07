@@ -1,16 +1,19 @@
 import DomainModels
 import QuoteClient
 import QuoteDetail
+import Login
 import UIKit
 
 class QuoteCoordinator {
     private var navigationController: UINavigationController
     private var selectedQuote: Quote
+    private var registerVC: RegistrationViewController
     var removeFromMemory: (() -> Void)?
 
-    init(navigationController: UINavigationController, quote: Quote) {
+    init(navigationController: UINavigationController, quote: Quote, registerVC: RegistrationViewController) {
         self.navigationController = navigationController
         selectedQuote = quote
+        self.registerVC = registerVC
     }
 
     func start() {
@@ -18,8 +21,9 @@ class QuoteCoordinator {
         viewController.onViewDidDisappear = { [weak self] in
             self?.removeFromMemory?()
         }
-        viewController.showWelcomeView = {[weak self] in
-            print("UNAUTH")
+        registerVC.modalPresentationStyle = .popover
+        viewController.showWelcomeView = {
+            viewController.present(self.registerVC, animated: true, completion: nil)
         }
         viewController.navigationItem.title = selectedQuote.name
         navigationController.pushViewController(viewController, animated: true)
