@@ -97,7 +97,6 @@ class TabBarCoordinator {
             self?.loginVC.modalPresentationStyle = .popover
             self?.regVC.dismiss(animated: true, completion: { () -> Void in self?.tabBarController.selectedViewController?.present(self!.loginVC, animated: true, completion: nil) })
         }
-
         loginVC.regButtonHandler = { [weak self] in
             self?.regVC.modalPresentationStyle = .popover
             self?.loginVC.dismiss(animated: true, completion: { () -> Void in self?.tabBarController.selectedViewController?.present(self!.regVC, animated: true, completion: nil) })
