@@ -42,10 +42,6 @@ class TabBarCoordinator {
 
         profileVC.toLogin = { [weak self] in
             self?.loginVC.modalPresentationStyle = .popover
-            self?.loginVC.regButtonHandler = {
-                self?.regVC.modalPresentationStyle = .popover
-                self?.loginVC.dismiss(animated: true, completion: { () -> Void in self?.profileVC.present(self!.regVC, animated: true, completion: nil) })
-            }
             self?.loginVC.loginButtonHandler = { [weak self] email, password in
                 Auth.auth().signIn(withEmail: email, password: password) { [weak self] authResult, error in
                     guard let strongSelf = self else { return }
@@ -64,10 +60,6 @@ class TabBarCoordinator {
 
         profileVC.toReg = { [weak self] in
             self?.regVC.modalPresentationStyle = .popover
-            self?.regVC.loginButtonHandler = {
-                self?.loginVC.modalPresentationStyle = .popover
-                self?.regVC.dismiss(animated: true, completion: { () -> Void in self?.profileVC.present(self!.loginVC, animated: true, completion: nil) })
-            }
             self!.regVC.regButtonHandler = { [weak self] email, password in
                 Auth.auth().createUser(withEmail: email, password: password) { [weak self] authResult, error in
                     guard let strongSelf = self else { return }
@@ -99,6 +91,16 @@ class TabBarCoordinator {
             strategyResultsVC.amountsToSpendSuggested = amounts
             strategyResultsVC.modalPresentationStyle = .popover
             strategyVC.present(resultsNC, animated: true, completion: nil)
+        }
+
+        regVC.loginButtonHandler = { [weak self] in
+            self?.loginVC.modalPresentationStyle = .popover
+            self?.regVC.dismiss(animated: true, completion: { () -> Void in self?.tabBarController.selectedViewController?.present(self!.loginVC, animated: true, completion: nil) })
+        }
+
+        loginVC.regButtonHandler = { [weak self] in
+            self?.regVC.modalPresentationStyle = .popover
+            self?.loginVC.dismiss(animated: true, completion: { () -> Void in self?.tabBarController.selectedViewController?.present(self!.regVC, animated: true, completion: nil) })
         }
 
         quotesNC.tabBarItem = UITabBarItem(title: "Quotes", image: Theme.Images.quotesTabBar, tag: 0)
