@@ -11,7 +11,6 @@ Shows list of quotes with search bar, chart with price for specific quote, count
 
 
 ## UX
-![ezgif-5-6a475232c7](https://user-images.githubusercontent.com/45201186/236789464-bcf7cab6-1aa4-4536-ad0f-39dbf65a1a4e.gif)
 
 <table>
 	<thead>
@@ -23,10 +22,10 @@ Shows list of quotes with search bar, chart with price for specific quote, count
 	<tbody>
 		<tr>
 			<td>
-				<img src="https://user-images.githubusercontent.com/45201186/236705048-a57d021b-04d7-4ab6-a905-a9352c04455b.gif" width="300"/>
+				<img src="https://user-images.githubusercontent.com/45201186/236705055-1e80660c-d8a6-4028-b6ac-7b481f9bc336.gif" width="300"/>
 			</td>
 			<td>
-				<img src="https://user-images.githubusercontent.com/45201186/236705055-1e80660c-d8a6-4028-b6ac-7b481f9bc336.gif" width="300"/>
+				<img src="https://user-images.githubusercontent.com/45201186/236705048-a57d021b-04d7-4ab6-a905-a9352c04455b.gif" width="300"/>
 			</td>
 		</tr>
 	</tbody>
@@ -35,8 +34,8 @@ Shows list of quotes with search bar, chart with price for specific quote, count
 <table>
 	<thead>
 		<tr>
-			<th>Favorite</th>
-      <th>Detail</th>
+			<th>Login/Register</th>
+      <th>Favorite</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -54,7 +53,7 @@ Shows list of quotes with search bar, chart with price for specific quote, count
 <table>
 	<thead>
 		<tr>
-			<th>Favorite</th>
+			<th>Strategy</th>
       <th>Login error handling</th>
 		</tr>
 	</thead>
@@ -64,7 +63,22 @@ Shows list of quotes with search bar, chart with price for specific quote, count
 				<img src="https://user-images.githubusercontent.com/45201186/236789711-998e8016-d0c4-4de6-a7a8-b628a8811038.gif" width="300"/>
 			</td>
 			<td>
-				<img src="https://user-images.githubusercontent.com/45201186/236789618-4493532b-bff0-409d-b394-0578196902aa.gif" width="300"/>
+				<img src="https://user-images.githubusercontent.com/45201186/236790538-bfa15fd4-66eb-4e71-9379-c06d8c7c5f90.gif" width="300"/>
+			</td>
+		</tr>
+	</tbody>
+</table>
+
+<table>
+	<thead>
+		<tr>
+			<th>No internet connection</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+      <td>
+				<img src="https://user-images.githubusercontent.com/45201186/236790748-1adcc9cb-24c8-4ce0-b2b7-38ce0a6178c9.gif" width="300"/>
 			</td>
 		</tr>
 	</tbody>
