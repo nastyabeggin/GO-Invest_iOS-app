@@ -2,7 +2,7 @@
 # Go-invest
 *Currently in progress...* 
 
-![Logo](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/th5xamgrr6se0x5ro4g6.png)
+![image](https://user-images.githubusercontent.com/45201186/236788863-92bbfe8e-35a5-4832-bff0-5a53f6e26d29.png))
 
 
 iOS application made on Sirius intensive in team of 5 people. 
