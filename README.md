@@ -1,8 +1,7 @@
 
 # Go-invest
-*Currently in progress...* 
 
-![image](https://user-images.githubusercontent.com/45201186/236788863-92bbfe8e-35a5-4832-bff0-5a53f6e26d29.png))
+![image](https://user-images.githubusercontent.com/45201186/236788863-92bbfe8e-35a5-4832-bff0-5a53f6e26d29.png)
 
 
 iOS application made on Sirius intensive in team of 5 people. 
@@ -12,8 +11,64 @@ Shows list of quotes with search bar, chart with price for specific quote, count
 
 
 ## UX
-![ezgif-2-fb88a75fad](https://user-images.githubusercontent.com/45201186/236705048-a57d021b-04d7-4ab6-a905-a9352c04455b.gif)
-![ezgif-2-3c8fac571e](https://user-images.githubusercontent.com/45201186/236705055-1e80660c-d8a6-4028-b6ac-7b481f9bc336.gif)
+![ezgif-5-6a475232c7](https://user-images.githubusercontent.com/45201186/236789464-bcf7cab6-1aa4-4536-ad0f-39dbf65a1a4e.gif)
+
+<table>
+	<thead>
+		<tr>
+			<th>Quotes</th>
+			<th>Search</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>
+				<img src="https://user-images.githubusercontent.com/45201186/236705048-a57d021b-04d7-4ab6-a905-a9352c04455b.gif" width="300"/>
+			</td>
+			<td>
+				<img src="https://user-images.githubusercontent.com/45201186/236705055-1e80660c-d8a6-4028-b6ac-7b481f9bc336.gif" width="300"/>
+			</td>
+		</tr>
+	</tbody>
+</table>
+
+<table>
+	<thead>
+		<tr>
+			<th>Favorite</th>
+      <th>Detail</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+      <td>
+				<img src="https://user-images.githubusercontent.com/45201186/236789376-28a5e708-fd63-4429-ad17-489be42dfda4.gif" width="300"/>
+			</td>
+			<td>
+				<img src="https://user-images.githubusercontent.com/45201186/236789464-bcf7cab6-1aa4-4536-ad0f-39dbf65a1a4e.gif" width="300"/>
+			</td>
+		</tr>
+	</tbody>
+</table>
+
+<table>
+	<thead>
+		<tr>
+			<th>Favorite</th>
+      <th>Login error handling</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+      <td>
+				<img src="https://user-images.githubusercontent.com/45201186/236789711-998e8016-d0c4-4de6-a7a8-b628a8811038.gif" width="300"/>
+			</td>
+			<td>
+				<img src="https://user-images.githubusercontent.com/45201186/236789618-4493532b-bff0-409d-b394-0578196902aa.gif" width="300"/>
+			</td>
+		</tr>
+	</tbody>
+</table>
 
 
 
